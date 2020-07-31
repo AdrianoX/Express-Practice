@@ -1,0 +1,9 @@
+h1, p {
+    font-weight: lighter;
+    font-size: italic;
+    color: white;
+}
+
+body {
+    background-color:  black;
+}

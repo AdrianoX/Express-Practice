@@ -2,47 +2,49 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
+const hbs = require('express-handlebars');
 
-app.use((req, res, next) => {
-  res.show = (name) => {
-    res.sendFile(path.join(__dirname, `/views/${name}`));
-  };
-  next();
-});
 
-// app.get('/style.css', (req, res) => {
-//     res.sendFile(path.join(__dirname, '/style.css'));
-//   });
+app.engine('hbs', hbs());
+app.set('view engine', '.hbs');
 
-// app.get('/test.png', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/test.png'));
+// app.use((req, res, next) => {
+//   res.show = (name) => {
+//     res.sendFile(path.join(__dirname, `/views/${name}`));
+//   };
+//   next();
 // });
 
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.get("/", (req, res) => {
-  res.show("index.html");
-});
-
-app.get("/about", (req, res) => {
-  res.show("about.html");
-});
-
-app.get("/contact", (req, res) => {
-  res.show("contact.html");
-});
-
-app.get("/info", (req, res) => {
-  res.show("info.html");
-});
-
-app.get("/History", (req, res) => {
-  res.show("history.html");
+  res.render('index');
 });
 
 app.get('/hello/:name', (req, res) => {
-    res.send(`Witaj ${req.params.name}`);
+    res.render('hello', { name: req.params.name});
 });
+
+app.get("/about", (req, res) => {
+  res.render('about', { layout: 'darkMain'});
+});
+
+app.get("/contact", (req, res) => {
+  res.render('contact');
+});
+
+app.get("/info", (req, res) => {
+  res.render('info');
+});
+
+app.get("/History", (req, res) => {
+  res.render('history', { layout: 'darkMain2'});
+});
+
+// app.get('/hello/:name', (req, res) => {
+//     res.send(`Witaj ${req.params.name}`);
+// });
+
 
 app.use((req, res) => {
   res.status(404).send("404 not found...");
