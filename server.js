@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-
 const app = express();
 const hbs = require('express-handlebars');
 
@@ -42,12 +41,12 @@ app.get("/History", (req, res) => {
   res.render('history', { layout: 'darkMain2'});
 });
 
-app.post('/contact/send-message', (req, res) => {
+app.post('/contact/send-message',  (req, res) => {
     
-    const { author, sender, title, message } = req.body;
+    const { author, sender, title, image, message } = req.body;
 
-    if(author && sender && title && message) {
-        res.render('contact', { isSent: true });
+    if(author && sender && title && image && message) {
+        res.render('contact', { isSent: true, imageTitle: image });
     }
     else {
         res.render('contact', { isError: true });
