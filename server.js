@@ -16,6 +16,7 @@ app.set('view engine', '.hbs');
 // });
 
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
   res.render('index');
@@ -41,10 +42,29 @@ app.get("/History", (req, res) => {
   res.render('history', { layout: 'darkMain2'});
 });
 
-// app.get('/hello/:name', (req, res) => {
-//     res.send(`Witaj ${req.params.name}`);
-// });
+app.post('/contact/send-message', (req, res) => {
+    
+    const { author, sender, title, message } = req.body;
 
+    if(author && sender && title && message) {
+        res.render('contact', { isSent: true });
+    }
+    else {
+        res.render('contact', { isError: true });
+    }
+});
+
+// app.post('/contact/send-message', (req, res) => {
+    
+//     const { author, sender, title, message } = req.body;
+
+//     if(author && sender && title && message) {
+//         res.send('The message has been sent ! : )');
+//     }
+//     else {
+//         res.send('You can\'t leave fields empty')
+//     }
+// });
 
 app.use((req, res) => {
   res.status(404).send("404 not found...");
