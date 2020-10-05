@@ -7,12 +7,6 @@ const hbs = require('express-handlebars');
 app.engine('hbs', hbs());
 app.set('view engine', '.hbs');
 
-// app.use((req, res, next) => {
-//   res.show = (name) => {
-//     res.sendFile(path.join(__dirname, `/views/${name}`));
-//   };
-//   next();
-// });
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({ extended: false }));
@@ -53,17 +47,6 @@ app.post('/contact/send-message',  (req, res) => {
     }
 });
 
-// app.post('/contact/send-message', (req, res) => {
-    
-//     const { author, sender, title, message } = req.body;
-
-//     if(author && sender && title && message) {
-//         res.send('The message has been sent ! : )');
-//     }
-//     else {
-//         res.send('You can\'t leave fields empty')
-//     }
-// });
 
 app.use((req, res) => {
   res.status(404).send("404 not found...");
